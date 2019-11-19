@@ -1,5 +1,6 @@
 import { randomWeapon, beatenBy, randomWeaponPopulation } from './RPS';
 import { Opponent, BattleHistory, Weapon, BattleResult } from './types';
+import { countHistoryOpponentWeapons } from './game';
 
 export const oneWeapon: Opponent = {
   name: 'Alan the Almighty',
@@ -44,18 +45,28 @@ export const randomAlternate: Opponent = {
 export const twoWeapons: Opponent = {
   name: 'Damian the Delicious',
   generateWeapon: (history: BattleHistory) => {
-    const weapons = new Set(history.map(battle => battle.opponent));
-    if (weapons.size <= 1) {
-      return randomWeapon();
+    if (history.length === 0) {
+      switch (randomWeapon()) {
+        case Weapon.Rock:
+          twoWeapons.state = [0, 1, 1];
+          break;
+        case Weapon.Paper:
+          twoWeapons.state = [1, 0, 1];
+          break;
+        case Weapon.Scissors:
+          twoWeapons.state = [1, 1, 0];
+          break;
+        default:
+          break;
+      }
     }
-    if (!weapons.has(Weapon.Rock)) {
-      return randomWeaponPopulation(0, 1, 1);
-    }
-    if (!weapons.has(Weapon.Paper)) {
-      return randomWeaponPopulation(1, 0, 1);
-    }
-    return randomWeaponPopulation(1, 1, 0);
-  }
+    return randomWeaponPopulation(
+      twoWeapons.state[0],
+      twoWeapons.state[1],
+      twoWeapons.state[2]
+    );
+  },
+  state: [0, 0, 0]
 };
 
 export const mostWinning: Opponent = {
@@ -86,5 +97,50 @@ export const mostWinning: Opponent = {
       threshold(wins[Weapon.Paper]),
       threshold(wins[Weapon.Scissors])
     );
+  }
+};
+
+export const randomGuy: Opponent = {
+  name: 'Florian the Fallen',
+  generateWeapon: () => randomWeapon()
+};
+
+export const favoriteWeapon: Opponent = {
+  name: 'Gregory the Generous',
+  generateWeapon: (history: BattleHistory) => {
+    if (history.length === 0) {
+      switch (randomWeapon()) {
+        case Weapon.Rock:
+          twoWeapons.state = [2, 1, 1];
+          break;
+        case Weapon.Paper:
+          twoWeapons.state = [1, 2, 1];
+          break;
+        case Weapon.Scissors:
+          twoWeapons.state = [1, 1, 2];
+          break;
+        default:
+          break;
+      }
+    }
+    return randomWeaponPopulation(
+      twoWeapons.state[0],
+      twoWeapons.state[1],
+      twoWeapons.state[2]
+    );
+  },
+  state: [0, 0, 0]
+};
+
+export const proportionalBeat: Opponent = {
+  name: 'Hugo the Hilarious',
+  generateWeapon: (history: BattleHistory) => {
+    if (history.length === 0) {
+      return randomWeapon();
+    }
+    const rocks = countHistoryOpponentWeapons(history, Weapon.Rock);
+    const papers = countHistoryOpponentWeapons(history, Weapon.Paper);
+    const scissors = countHistoryOpponentWeapons(history, Weapon.Scissors);
+    return beatenBy(beatenBy(randomWeaponPopulation(rocks, papers, scissors)));
   }
 };

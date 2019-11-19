@@ -3,7 +3,10 @@ import {
   beatLast,
   randomAlternate,
   twoWeapons,
-  mostWinning
+  mostWinning,
+  randomGuy,
+  favoriteWeapon,
+  proportionalBeat
 } from './opponents';
 import { Game, AppView, initGame } from './types';
 
@@ -20,7 +23,10 @@ export const allOpponents = [
   beatLast,
   randomAlternate,
   twoWeapons,
-  mostWinning
+  mostWinning,
+  randomGuy,
+  favoriteWeapon,
+  proportionalBeat
 ];
 
 export const initialState: State = {

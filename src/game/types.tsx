@@ -49,6 +49,7 @@ export type BattleHistory = Battle[];
 export interface Opponent {
   name: string;
   generateWeapon: (history: BattleHistory) => Weapon;
+  state?: any;
 }
 
 export type Game = {
