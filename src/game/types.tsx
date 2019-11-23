@@ -53,13 +53,13 @@ export interface Opponent {
 }
 
 export type Game = {
-  opponent: Opponent;
+  opponentId: number;
   history: BattleHistory;
   stats: GameStats;
 };
 
-export const initGame = (op: Opponent) => ({
-  opponent: op,
+export const initGame = (opponentId: number) => ({
+  opponentId,
   history: [],
   stats: initialStats
 });

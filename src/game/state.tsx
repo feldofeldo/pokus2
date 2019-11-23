@@ -30,7 +30,7 @@ export const allOpponents = [
 ];
 
 export const initialState: State = {
-  games: allOpponents.map(op => initGame(op)),
+  games: allOpponents.map((_, op) => initGame(op)),
   activeGameId: 0,
   activeView: AppView.Intro
 };

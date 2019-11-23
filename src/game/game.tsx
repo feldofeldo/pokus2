@@ -2,6 +2,7 @@ import { fight } from './RPS';
 import { addResultToStats, resetCurrentStats } from './stats';
 import { NUM_ROUNDS, TOTAL_ROUNDS } from '../constants';
 import { BattleHistory, Weapon, Game } from './types';
+import { getOpponent } from './utils';
 
 // HISTORY
 
@@ -22,7 +23,7 @@ export function countHistoryOpponentWeapons(
 // GAME
 
 export function generateWeapon(game: Game): Weapon {
-  return game.opponent.generateWeapon(game.history);
+  return getOpponent(game.opponentId).generateWeapon(game.history);
 }
 
 export function addBattleToGame(
@@ -33,7 +34,7 @@ export function addBattleToGame(
   return game => {
     const history = [...game.history, { me, opponent, result }];
     const stats = addResultToStats(game.stats, result);
-    return { opponent: game.opponent, history, stats };
+    return { opponentId: game.opponentId, history, stats };
   };
 }
 

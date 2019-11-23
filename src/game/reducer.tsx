@@ -29,7 +29,7 @@ export const reducer: Reducer<State, RootAction> = (
 ) => {
   switch (action.type) {
     case RESET_STATE:
-      return { ...initialState, activeView: AppView.Basic };
+      return { ...initialState };
 
     case RESET_STATE_MODAL:
       return { ...state, activeView: AppView.BasicWithModal };

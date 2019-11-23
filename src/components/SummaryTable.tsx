@@ -1,36 +1,38 @@
-import Table from 'react-bootstrap/Table'
-import React from 'react'
-import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
-import { Dispatch } from 'redux'
-import { action } from 'typesafe-actions'
-import { connect } from 'react-redux'
-import { RootAction } from '../game/reducer'
+import Table from 'react-bootstrap/Table';
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { Dispatch } from 'redux';
+import { action } from 'typesafe-actions';
+import { connect } from 'react-redux';
+import { RootAction } from '../game/reducer';
 import {
   SWITCH_VIEW_TO_GAME,
   TOTAL_ROUNDS,
   RESET_STATE,
   RESET_STATE_MODAL,
-  SWITCH_VIEW_TO_BASIC,
-} from '../constants'
-import { State } from '../game/state'
-import { AppView } from '../game/types'
+  SWITCH_VIEW_TO_BASIC
+} from '../constants';
+import { State } from '../game/state';
+import { AppView } from '../game/types';
+import { getOpponent } from '../game/utils';
 
 const mapStateToProps = (state: State) => ({
-  allStats: state.games.map((game) => game.stats),
-  allNames: state.games.map((game) => game.opponent.name),
-  showModal: state.activeView === AppView.BasicWithModal,
-})
+  allStats: state.games.map(game => game.stats),
+  allNames: state.games.map(game => getOpponent(game.opponentId).name),
+  showModal: state.activeView === AppView.BasicWithModal
+});
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => ({
-  onClickPlay: (i: number) => () => dispatch(action(SWITCH_VIEW_TO_GAME, { gameId: i })),
+  onClickPlay: (i: number) => () =>
+    dispatch(action(SWITCH_VIEW_TO_GAME, { gameId: i })),
   onClickModal: () => dispatch(action(RESET_STATE_MODAL)),
   onClickReset: () => dispatch(action(RESET_STATE)),
-  onHide: () => dispatch(action(SWITCH_VIEW_TO_BASIC)),
-})
+  onHide: () => dispatch(action(SWITCH_VIEW_TO_BASIC))
+});
 
 type Props = ReturnType<typeof mapStateToProps> &
-ReturnType<typeof mapDispatchToProps>
+  ReturnType<typeof mapDispatchToProps>;
 
 const _SummaryTable: React.FC<Props> = ({
   allStats,
@@ -39,7 +41,7 @@ const _SummaryTable: React.FC<Props> = ({
   onClickReset,
   onClickModal,
   showModal,
-  onHide,
+  onHide
 }) => (
   <>
     <Table bordered striped hover>
@@ -75,11 +77,7 @@ const _SummaryTable: React.FC<Props> = ({
             <th>{stats.best.draws}</th>
             <th>{stats.best.score}</th>
             <th>
-              {stats.rounds}
-              {' '}
-/
-              {' '}
-              {TOTAL_ROUNDS}
+              {stats.rounds} / {TOTAL_ROUNDS}
             </th>
             <th>
               <Button
@@ -98,24 +96,25 @@ const _SummaryTable: React.FC<Props> = ({
 
     <Modal show={showModal} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>Reset state</Modal.Title>
+        <Modal.Title>Reset game</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        This will reset your whole progress, are you sure you want to proceed?
+        This will reset your whole progress and start a new game, are you sure
+        you want to proceed?
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
           Cancel
         </Button>
         <Button variant="danger" onClick={onClickReset}>
-          Reset state
+          Reset Game
         </Button>
       </Modal.Footer>
     </Modal>
   </>
-)
+);
 
 export const SummaryTable = connect(
   mapStateToProps,
-  mapDispatchToProps,
-)(_SummaryTable)
+  mapDispatchToProps
+)(_SummaryTable);
