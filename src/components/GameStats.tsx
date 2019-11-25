@@ -1,25 +1,23 @@
-import React from 'react'
-import Table from 'react-bootstrap/Table'
-import { connect } from 'react-redux'
-import { State } from '../game/state'
-import { NUM_ROUNDS } from '../constants'
+import React from 'react';
+import Table from 'react-bootstrap/Table';
+import { connect } from 'react-redux';
+import { State } from '../game/state';
+import { getActiveGame, getActiveOpponent } from '../game/utils';
+import { ScoreCell } from './ScoreCell';
+import { NUM_ROUNDS } from '../constants';
 
 const mapStateToProps = (state: State) => ({
-  stats: state.games[state.activeGameId].stats,
-})
+  stats: getActiveGame(state).stats,
+  par: getActiveOpponent(state).par
+});
 
-type GameStatsProps = ReturnType<typeof mapStateToProps>
+type GameStatsProps = ReturnType<typeof mapStateToProps>;
 
-export const _GameStats: React.FC<GameStatsProps> = ({ stats }) => (
+export const _GameStats: React.FC<GameStatsProps> = ({ stats, par }) => (
   <Table bordered hover>
     <thead>
       <tr>
-        <th>
-          Total Rounds:
-          {' '}
-          {stats.rounds}
-          {' '}
-        </th>
+        <th>Total Rounds: {stats.rounds} </th>
         <th>Wins</th>
         <th>Losses</th>
         <th>Draws</th>
@@ -28,33 +26,25 @@ export const _GameStats: React.FC<GameStatsProps> = ({ stats }) => (
     </thead>
     <tbody>
       <tr>
-        <th><b>Current</b></th>
+        <th>
+          <b>Current</b>
+        </th>
         <th>{stats.current.wins}</th>
         <th>{stats.current.losses}</th>
         <th>{stats.current.draws}</th>
-        <th>
-          {stats.current.score}
-          {' '}
-/
-          {' '}
-          {NUM_ROUNDS}
-        </th>
+        <ScoreCell par={par} score={stats.current.score} total={NUM_ROUNDS} />
       </tr>
       <tr>
-        <th><b>Best</b></th>
+        <th>
+          <b>Best</b>
+        </th>
         <th>{stats.best.wins}</th>
         <th>{stats.best.losses}</th>
         <th>{stats.best.draws}</th>
-        <th>
-          {stats.best.score}
-          {' '}
-/
-          {' '}
-          {NUM_ROUNDS}
-        </th>
+        <ScoreCell par={par} score={stats.best.score} total={NUM_ROUNDS} />
       </tr>
     </tbody>
   </Table>
-)
+);
 
-export const GameStats = connect(mapStateToProps)(_GameStats)
+export const GameStats = connect(mapStateToProps)(_GameStats);

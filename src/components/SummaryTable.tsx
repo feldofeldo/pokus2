@@ -20,6 +20,7 @@ import { getOpponent } from '../game/utils';
 import { OpponentSpan } from './OpponentSpan';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { ScoreCell } from './ScoreCell';
 
 const mapStateToProps = (state: State) => ({
   allStats: state.games.map(game => game.stats),
@@ -77,9 +78,11 @@ const _SummaryTable: React.FC<Props> = ({
             <th>{stats.best.wins}</th>
             <th>{stats.best.losses}</th>
             <th>{stats.best.draws}</th>
-            <th>
-              {stats.best.score} / {NUM_ROUNDS}
-            </th>
+            <ScoreCell
+              par={allOpponents[i].par}
+              score={stats.best.score}
+              total={NUM_ROUNDS}
+            />
             <th>
               {stats.rounds} / {TOTAL_ROUNDS}
             </th>
@@ -108,12 +111,12 @@ const _SummaryTable: React.FC<Props> = ({
           <th>
             <b>{allStats.reduce((pv, cv) => cv.best.draws + pv, 0)}</b>
           </th>
-          <th>
-            <b>
-              {allStats.reduce((pv, cv) => cv.best.score + pv, 0)} /{' '}
-              {NUM_ROUNDS * allStats.length}
-            </b>
-          </th>
+          <ScoreCell
+            score={allStats.reduce((pv, cv) => cv.best.score + pv, 0)}
+            total={NUM_ROUNDS * allStats.length}
+            par={allOpponents.reduce((pv, cv) => cv.par + pv, 0)}
+          />
+
           <th>
             <b>
               {allStats.reduce((pv, cv) => cv.rounds + pv, 0)} /{' '}

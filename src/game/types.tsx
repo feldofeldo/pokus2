@@ -52,6 +52,7 @@ export interface Opponent {
   name: string;
   icon: IconDefinition;
   generateWeapon: (history: BattleHistory) => Weapon;
+  par: number;
   state?: any;
 }
 

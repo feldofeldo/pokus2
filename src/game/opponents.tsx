@@ -11,6 +11,7 @@ import {
   faGift,
   faGrinSquintTears
 } from '@fortawesome/free-solid-svg-icons';
+import { NUM_ROUNDS } from '../constants';
 
 export const oneWeapon: Opponent = {
   name: 'Alan the Almighty',
@@ -20,7 +21,8 @@ export const oneWeapon: Opponent = {
       return randomWeapon();
     }
     return history[0].opponent;
-  }
+  },
+  par: NUM_ROUNDS - 0.5
 };
 
 export const beatLast: Opponent = {
@@ -31,7 +33,8 @@ export const beatLast: Opponent = {
       return randomWeapon();
     }
     return beatenBy(history[history.length - 1].me);
-  }
+  },
+  par: NUM_ROUNDS - 0.5
 };
 
 export const randomAlternate: Opponent = {
@@ -52,7 +55,8 @@ export const randomAlternate: Opponent = {
       default:
         throw new Error('Switching enum');
     }
-  }
+  },
+  par: 0.5 + 0.75 * (NUM_ROUNDS - 1)
 };
 
 export const twoWeapons: Opponent = {
@@ -80,7 +84,8 @@ export const twoWeapons: Opponent = {
       twoWeapons.state[2]
     );
   },
-  state: [0, 0, 0]
+  state: [0, 0, 0],
+  par: 0.5 + 0.75 * (NUM_ROUNDS - 1)
 };
 
 export const mostWinning: Opponent = {
@@ -112,13 +117,15 @@ export const mostWinning: Opponent = {
       threshold(wins[Weapon.Paper]),
       threshold(wins[Weapon.Scissors])
     );
-  }
+  },
+  par: 0.75 * NUM_ROUNDS
 };
 
 export const randomGuy: Opponent = {
   name: 'Florian the Fallen',
   icon: faBookDead,
-  generateWeapon: () => randomWeapon()
+  generateWeapon: () => randomWeapon(),
+  par: NUM_ROUNDS / 2 + 1
 };
 
 export const favoriteWeapon: Opponent = {
@@ -146,7 +153,8 @@ export const favoriteWeapon: Opponent = {
       twoWeapons.state[2]
     );
   },
-  state: [0, 0, 0]
+  state: [0, 0, 0],
+  par: 0.625 * NUM_ROUNDS
 };
 
 export const proportionalBeat: Opponent = {
@@ -160,5 +168,6 @@ export const proportionalBeat: Opponent = {
     const papers = countHistoryOpponentWeapons(history, Weapon.Paper);
     const scissors = countHistoryOpponentWeapons(history, Weapon.Scissors);
     return beatenBy(beatenBy(randomWeaponPopulation(rocks, papers, scissors)));
-  }
+  },
+  par: (2 / 3) * NUM_ROUNDS
 };
