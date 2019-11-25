@@ -2,8 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import CSS from 'csstype';
 import { RootAction } from '../game/reducer';
-import { weaponToString } from '../utils';
 import { Weapon } from '../game/types';
+import { WeaponSpan } from './Weapons';
 
 const buttonStyle: CSS.Properties = {
   margin: '10px'
@@ -46,6 +46,6 @@ export const WeaponButton: React.FC<Props> = ({
     onClick={onClick(weapon)}
     disabled={disabled}
   >
-    {weaponToString(weapon)}
+    <WeaponSpan weapon={weapon} />
   </Button>
 );

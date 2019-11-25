@@ -1,3 +1,5 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
 // GAME LOGIC
 
 export enum Weapon {
@@ -48,6 +50,7 @@ export type BattleHistory = Battle[];
 
 export interface Opponent {
   name: string;
+  icon: IconDefinition;
   generateWeapon: (history: BattleHistory) => Weapon;
   state?: any;
 }

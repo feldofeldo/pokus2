@@ -1,9 +1,20 @@
 import { randomWeapon, beatenBy, randomWeaponPopulation } from './RPS';
 import { Opponent, BattleHistory, Weapon, BattleResult } from './types';
 import { countHistoryOpponentWeapons } from './game';
+import {
+  faDumbbell,
+  faHammer,
+  faQuestion,
+  faCookieBite,
+  faGraduationCap,
+  faBookDead,
+  faGift,
+  faGrinSquintTears
+} from '@fortawesome/free-solid-svg-icons';
 
 export const oneWeapon: Opponent = {
   name: 'Alan the Almighty',
+  icon: faDumbbell,
   generateWeapon: (history: BattleHistory) => {
     if (history.length === 0) {
       return randomWeapon();
@@ -14,6 +25,7 @@ export const oneWeapon: Opponent = {
 
 export const beatLast: Opponent = {
   name: 'Beatrice the Brutal',
+  icon: faHammer,
   generateWeapon: (history: BattleHistory) => {
     if (history.length === 0) {
       return randomWeapon();
@@ -24,6 +36,7 @@ export const beatLast: Opponent = {
 
 export const randomAlternate: Opponent = {
   name: 'Cedric the Confused',
+  icon: faQuestion,
   generateWeapon: (history: BattleHistory) => {
     if (history.length === 0) {
       return randomWeapon();
@@ -44,6 +57,7 @@ export const randomAlternate: Opponent = {
 
 export const twoWeapons: Opponent = {
   name: 'Damian the Delicious',
+  icon: faCookieBite,
   generateWeapon: (history: BattleHistory) => {
     if (history.length === 0) {
       switch (randomWeapon()) {
@@ -71,6 +85,7 @@ export const twoWeapons: Opponent = {
 
 export const mostWinning: Opponent = {
   name: 'Edward the Educated',
+  icon: faGraduationCap,
   generateWeapon: (history: BattleHistory) => {
     const wins = history.reduce(
       (pv, battle) => {
@@ -102,11 +117,13 @@ export const mostWinning: Opponent = {
 
 export const randomGuy: Opponent = {
   name: 'Florian the Fallen',
+  icon: faBookDead,
   generateWeapon: () => randomWeapon()
 };
 
 export const favoriteWeapon: Opponent = {
   name: 'Gregory the Generous',
+  icon: faGift,
   generateWeapon: (history: BattleHistory) => {
     if (history.length === 0) {
       switch (randomWeapon()) {
@@ -134,6 +151,7 @@ export const favoriteWeapon: Opponent = {
 
 export const proportionalBeat: Opponent = {
   name: 'Hugo the Hilarious',
+  icon: faGrinSquintTears,
   generateWeapon: (history: BattleHistory) => {
     if (history.length === 0) {
       return randomWeapon();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Weapon } from '../game/types';
-import { weaponToString } from '../utils';
+import { WeaponSpan } from './Weapons';
 
 type Props = {
   weapon: Weapon;
@@ -9,5 +9,9 @@ type Props = {
 export const ColoredWeaponCell: React.FC<Props> = ({ weapon }) => {
   const color =
     weapon === Weapon.Rock ? 'red' : weapon === Weapon.Paper ? 'green' : 'blue';
-  return <th style={{ color }}>{weaponToString(weapon)}</th>;
+  return (
+    <th style={{ color }}>
+      <WeaponSpan weapon={weapon} />
+    </th>
+  );
 };

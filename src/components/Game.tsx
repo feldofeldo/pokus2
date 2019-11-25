@@ -9,17 +9,20 @@ import { WeaponBar } from './WeaponBar';
 import { GameControls } from './GameControls';
 import { HistoryTable } from './HistoryTable';
 import { getActiveOpponent } from '../game/utils';
+import { OpponentSpan } from './OpponentSpan';
 
 const mapStateToProps = (state: State) => ({
-  opponentName: getActiveOpponent(state).name
+  opponent: getActiveOpponent(state)
 });
 
 type Props = ReturnType<typeof mapStateToProps>;
 
-const _Game: React.FC<Props> = ({ opponentName }) => (
+const _Game: React.FC<Props> = ({ opponent }) => (
   <Container>
     <Row style={{ justifyContent: 'center' }}>
-      <h1>{opponentName}</h1>
+      <h1>
+        <OpponentSpan opponent={opponent} />
+      </h1>
     </Row>
     <Row>
       <Col>

@@ -11,15 +11,19 @@ import {
   TOTAL_ROUNDS,
   RESET_STATE,
   RESET_STATE_MODAL,
-  SWITCH_VIEW_TO_BASIC
+  SWITCH_VIEW_TO_BASIC,
+  NUM_ROUNDS
 } from '../constants';
 import { State } from '../game/state';
 import { AppView } from '../game/types';
 import { getOpponent } from '../game/utils';
+import { OpponentSpan } from './OpponentSpan';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 const mapStateToProps = (state: State) => ({
   allStats: state.games.map(game => game.stats),
-  allNames: state.games.map(game => getOpponent(game.opponentId).name),
+  allOpponents: state.games.map(game => getOpponent(game.opponentId)),
   showModal: state.activeView === AppView.BasicWithModal
 });
 
@@ -36,7 +40,7 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 const _SummaryTable: React.FC<Props> = ({
   allStats,
-  allNames,
+  allOpponents,
   onClickPlay,
   onClickReset,
   onClickModal,
@@ -48,18 +52,18 @@ const _SummaryTable: React.FC<Props> = ({
       <thead>
         <tr>
           <th>Opponent</th>
-          <th>Current Wins</th>
-          <th>Current Losses</th>
-          <th>Current Draws</th>
-          <th>Current Score</th>
           <th>Best Wins</th>
           <th>Best Losses</th>
           <th>Best Draws</th>
           <th>Best Score</th>
           <th>Total Rounds</th>
           <th>
-            <Button variant="danger" onClick={onClickModal}>
-              RESET
+            <Button
+              variant="danger"
+              onClick={onClickModal}
+              style={{ margin: 'auto', display: 'block' }}
+            >
+              <FontAwesomeIcon icon={faTrashAlt} />
             </Button>
           </th>
         </tr>
@@ -67,15 +71,15 @@ const _SummaryTable: React.FC<Props> = ({
       <tbody>
         {allStats.map((stats, i) => (
           <tr>
-            <th>{allNames[i]}</th>
-            <th>{stats.current.wins}</th>
-            <th>{stats.current.losses}</th>
-            <th>{stats.current.draws}</th>
-            <th>{stats.current.score}</th>
+            <th>
+              <OpponentSpan opponent={allOpponents[i]} />
+            </th>
             <th>{stats.best.wins}</th>
             <th>{stats.best.losses}</th>
             <th>{stats.best.draws}</th>
-            <th>{stats.best.score}</th>
+            <th>
+              {stats.best.score} / {NUM_ROUNDS}
+            </th>
             <th>
               {stats.rounds} / {TOTAL_ROUNDS}
             </th>
@@ -86,11 +90,38 @@ const _SummaryTable: React.FC<Props> = ({
                 onClick={onClickPlay(i)}
                 disabled={stats.rounds >= TOTAL_ROUNDS}
               >
-                Play
+                <FontAwesomeIcon icon={faPlay} />
               </Button>
             </th>
           </tr>
         ))}
+        <tr style={{ backgroundColor: 'PaleTurquoise' }}>
+          <th>
+            <b>Sum</b>
+          </th>
+          <th>
+            <b>{allStats.reduce((pv, cv) => cv.best.wins + pv, 0)}</b>
+          </th>
+          <th>
+            <b>{allStats.reduce((pv, cv) => cv.best.losses + pv, 0)}</b>
+          </th>
+          <th>
+            <b>{allStats.reduce((pv, cv) => cv.best.draws + pv, 0)}</b>
+          </th>
+          <th>
+            <b>
+              {allStats.reduce((pv, cv) => cv.best.score + pv, 0)} /{' '}
+              {NUM_ROUNDS * allStats.length}
+            </b>
+          </th>
+          <th>
+            <b>
+              {allStats.reduce((pv, cv) => cv.rounds + pv, 0)} /{' '}
+              {TOTAL_ROUNDS * allStats.length}
+            </b>
+          </th>
+          <th />
+        </tr>
       </tbody>
     </Table>
 
