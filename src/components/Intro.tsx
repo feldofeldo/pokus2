@@ -1,14 +1,14 @@
 import Container from 'react-bootstrap/Container';
 import React, { Dispatch } from 'react';
 import Row from 'react-bootstrap/Row';
-import { TOTAL_ROUNDS, NUM_ROUNDS, SWITCH_VIEW_TO_BASIC } from '../constants';
+import { TOTAL_ROUNDS, NUM_ROUNDS } from '../constants';
 import { RootAction } from '../game/reducer';
-import { action } from 'typesafe-actions';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
+import { switchViewToBasic } from '../game/actions';
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => ({
-  onClick: () => dispatch(action(SWITCH_VIEW_TO_BASIC))
+  onClick: () => dispatch(switchViewToBasic())
 });
 
 type IntroProps = ReturnType<typeof mapDispatchToProps>;

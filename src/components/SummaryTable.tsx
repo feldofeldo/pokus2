@@ -3,17 +3,9 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Dispatch } from 'redux';
-import { action } from 'typesafe-actions';
 import { connect } from 'react-redux';
 import { RootAction } from '../game/reducer';
-import {
-  SWITCH_VIEW_TO_GAME,
-  TOTAL_ROUNDS,
-  RESET_STATE,
-  RESET_STATE_MODAL,
-  SWITCH_VIEW_TO_BASIC,
-  NUM_ROUNDS
-} from '../constants';
+import { NUM_ROUNDS, TOTAL_ROUNDS } from '../constants';
 import { State } from '../game/state';
 import { AppView } from '../game/types';
 import { getOpponent } from '../game/utils';
@@ -21,6 +13,12 @@ import { OpponentSpan } from './OpponentSpan';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { ScoreCell } from './ScoreCell';
+import {
+  switchViewToGame,
+  resetStateModal,
+  resetState,
+  switchViewToBasic
+} from '../game/actions';
 
 const mapStateToProps = (state: State) => ({
   allStats: state.games.map(game => game.stats),
@@ -29,11 +27,10 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => ({
-  onClickPlay: (i: number) => () =>
-    dispatch(action(SWITCH_VIEW_TO_GAME, { gameId: i })),
-  onClickModal: () => dispatch(action(RESET_STATE_MODAL)),
-  onClickReset: () => dispatch(action(RESET_STATE)),
-  onHide: () => dispatch(action(SWITCH_VIEW_TO_BASIC))
+  onClickPlay: (i: number) => () => dispatch(switchViewToGame(i)),
+  onClickModal: () => dispatch(resetStateModal()),
+  onClickReset: () => dispatch(resetState()),
+  onHide: () => dispatch(switchViewToBasic())
 });
 
 type Props = ReturnType<typeof mapStateToProps> &

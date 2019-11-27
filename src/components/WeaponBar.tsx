@@ -1,23 +1,21 @@
 import { Dispatch } from 'redux';
-import { action } from 'typesafe-actions';
 import React from 'react';
 import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { RootAction } from '../game/reducer';
-import { BATTLE_OPPONENT } from '../constants';
 import { State } from '../game/state';
 import { isGameFinished } from '../game/game';
 import { WeaponButton } from './WeaponButton';
 import { Weapon } from '../game/types';
+import { battleOpponent } from '../game/actions';
 
 const mapStateToProps = (state: State) => ({
   isFinished: isGameFinished(state.games[state.activeGameId])
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => ({
-  onClick: (weapon: Weapon) => () =>
-    dispatch(action(BATTLE_OPPONENT, { me: weapon }))
+  onClick: (weapon: Weapon) => () => dispatch(battleOpponent(weapon))
 });
 
 type WeaponBarProps = ReturnType<typeof mapStateToProps> &

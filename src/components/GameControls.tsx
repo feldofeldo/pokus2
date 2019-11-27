@@ -1,36 +1,35 @@
-import React, { Dispatch } from 'react'
-import { action } from 'typesafe-actions'
-import CSS from 'csstype'
-import Button from 'react-bootstrap/Button'
-import { connect } from 'react-redux'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import { RootAction } from '../game/reducer'
+import React, { Dispatch } from 'react';
+import CSS from 'csstype';
+import Button from 'react-bootstrap/Button';
+import { connect } from 'react-redux';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import { RootAction } from '../game/reducer';
 import {
-  INCREMENT_OPPONENT,
-  DECREMENT_OPPONENT,
-  RESET_OPPONENT,
-  SWITCH_VIEW_TO_BASIC,
-} from '../constants'
+  incrementOpponent,
+  decrementOpponent,
+  resetOpponent,
+  switchViewToBasic
+} from '../game/actions';
 
 const buttonStyle: CSS.Properties = {
-  margin: '10px',
-}
+  margin: '10px'
+};
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) => ({
-  onClickNext: () => dispatch(action(INCREMENT_OPPONENT)),
-  onClickPrevious: () => dispatch(action(DECREMENT_OPPONENT)),
-  onClickReset: () => dispatch(action(RESET_OPPONENT)),
-  onClickBack: () => dispatch(action(SWITCH_VIEW_TO_BASIC)),
-})
+  onClickNext: () => dispatch(incrementOpponent()),
+  onClickPrevious: () => dispatch(decrementOpponent()),
+  onClickReset: () => dispatch(resetOpponent()),
+  onClickBack: () => dispatch(switchViewToBasic())
+});
 
-type GameControlProps = ReturnType<typeof mapDispatchToProps>
+type GameControlProps = ReturnType<typeof mapDispatchToProps>;
 
 const _GameControls: React.FC<GameControlProps> = ({
   onClickNext,
   onClickBack,
   onClickPrevious,
-  onClickReset,
+  onClickReset
 }) => (
   <Container>
     <Row style={{ justifyContent: 'center' }}>
@@ -50,6 +49,6 @@ const _GameControls: React.FC<GameControlProps> = ({
       </Button>
     </Row>
   </Container>
-)
+);
 
-export const GameControls = connect(null, mapDispatchToProps)(_GameControls)
+export const GameControls = connect(null, mapDispatchToProps)(_GameControls);

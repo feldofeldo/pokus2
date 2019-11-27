@@ -1,27 +1,25 @@
-import { action } from 'typesafe-actions';
-import {
-  RESET_STATE,
-  BATTLE_OPPONENT,
-  CHANGE_OPPONENT,
-  INCREMENT_OPPONENT,
-  DECREMENT_OPPONENT,
-  SWITCH_VIEW_TO_BASIC,
-  SWITCH_VIEW_TO_GAME,
-  RESET_OPPONENT,
-  RESET_STATE_MODAL,
-  SWITCH_VIEW_TO_INTRO
-} from '../constants';
 import { Weapon } from './types';
+import { createAction } from 'typesafe-actions';
 
-export const resetState = () => action(RESET_STATE);
-export const resetStateModal = () => action(RESET_STATE_MODAL);
-export const battleOpponent = (me: Weapon) => action(BATTLE_OPPONENT, { me });
-export const changeOpponent = (newId: number) =>
-  action(CHANGE_OPPONENT, { newId });
-export const incrementOpponent = () => action(INCREMENT_OPPONENT);
-export const decrementOpponent = () => action(DECREMENT_OPPONENT);
-export const switchViewToBasic = () => action(SWITCH_VIEW_TO_BASIC);
-export const switchViewToGame = (gameId: number) =>
-  action(SWITCH_VIEW_TO_GAME, { gameId });
-export const switchViewToIntro = () => action(SWITCH_VIEW_TO_INTRO);
-export const resetOpponent = () => action(RESET_OPPONENT);
+// ACTIONS
+const RESET_STATE = 'resetState';
+const RESET_STATE_MODAL = 'resetStateModal';
+const BATTLE_OPPONENT = 'battleOpponent';
+const CHANGE_OPPONENT = 'changeOpponent';
+const INCREMENT_OPPONENT = 'incrementOpponent';
+const DECREMENT_OPPONENT = 'decrementOpponent';
+const SWITCH_VIEW_TO_BASIC = 'switchViewToBasic';
+const SWITCH_VIEW_TO_GAME = 'switchViewToGame';
+const SWITCH_VIEW_TO_INTRO = 'switchViewToIntro';
+const RESET_OPPONENT = 'resetOpponent';
+
+export const resetState = createAction(RESET_STATE)();
+export const resetStateModal = createAction(RESET_STATE_MODAL)();
+export const battleOpponent = createAction(BATTLE_OPPONENT)<Weapon>();
+export const changeOpponent = createAction(CHANGE_OPPONENT)<number>();
+export const incrementOpponent = createAction(INCREMENT_OPPONENT)();
+export const decrementOpponent = createAction(DECREMENT_OPPONENT)();
+export const switchViewToBasic = createAction(SWITCH_VIEW_TO_BASIC)();
+export const switchViewToGame = createAction(SWITCH_VIEW_TO_GAME)<number>();
+export const switchViewToIntro = createAction(SWITCH_VIEW_TO_INTRO)();
+export const resetOpponent = createAction(RESET_OPPONENT)();
