@@ -41,12 +41,20 @@ export const randomAlternate: Opponent = {
   name: 'Cedric the Confused',
   icon: faQuestion,
   generateWeapon: (history: BattleHistory) => {
-    if (history.length%2 === 0) {
+    if (history.length === 0) {
       return randomWeapon();
     }
-    return history[history.length - 1].opponent;
-  
-    
+    const { opponent } = history[history.length - 1];
+    switch (opponent) {
+      case Weapon.Rock:
+        return randomWeaponPopulation(0, 1, 1);
+      case Weapon.Paper:
+        return randomWeaponPopulation(1, 0, 1);
+      case Weapon.Scissors:
+        return randomWeaponPopulation(1, 1, 0);
+      default:
+        throw new Error('Switching enum');
+    }
   },
   par: 0.5 + 0.75 * (NUM_ROUNDS - 1)
 };
