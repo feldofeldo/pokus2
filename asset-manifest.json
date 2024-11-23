@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/pokus2/static/css/main.7b52e7e6.chunk.css",
+    "main.js": "/pokus2/static/js/main.c83b1bb0.chunk.js",
+    "main.js.map": "/pokus2/static/js/main.c83b1bb0.chunk.js.map",
+    "runtime-main.js": "/pokus2/static/js/runtime-main.513f7931.js",
+    "runtime-main.js.map": "/pokus2/static/js/runtime-main.513f7931.js.map",
+    "static/css/2.b6d150ae.chunk.css": "/pokus2/static/css/2.b6d150ae.chunk.css",
+    "static/js/2.cb110eff.chunk.js": "/pokus2/static/js/2.cb110eff.chunk.js",
+    "static/js/2.cb110eff.chunk.js.map": "/pokus2/static/js/2.cb110eff.chunk.js.map",
+    "index.html": "/pokus2/index.html",
+    "precache-manifest.aa8678159a97ea9a4a0d7e5b769cd329.js": "/pokus2/precache-manifest.aa8678159a97ea9a4a0d7e5b769cd329.js",
+    "service-worker.js": "/pokus2/service-worker.js",
+    "static/css/2.b6d150ae.chunk.css.map": "/pokus2/static/css/2.b6d150ae.chunk.css.map",
+    "static/css/main.7b52e7e6.chunk.css.map": "/pokus2/static/css/main.7b52e7e6.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.513f7931.js",
+    "static/css/2.b6d150ae.chunk.css",
+    "static/js/2.cb110eff.chunk.js",
+    "static/css/main.7b52e7e6.chunk.css",
+    "static/js/main.c83b1bb0.chunk.js"
+  ]
+}
