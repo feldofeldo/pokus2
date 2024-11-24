@@ -127,13 +127,13 @@ export const favoriteWeapon: Opponent = {
     if (history.length === 0) {
       switch (randomWeapon()) {
         case Weapon.Rock:
-          twoWeapons.state = [2, 1, 1];
+          twoWeapons.state = [5, 1, 1];
           break;
         case Weapon.Paper:
-          twoWeapons.state = [1, 2, 1];
+          twoWeapons.state = [1, 5, 1];
           break;
         case Weapon.Scissors:
-          twoWeapons.state = [1, 1, 2];
+          twoWeapons.state = [1, 1, 5];
           break;
         default:
           break;
